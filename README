@@ -1,0 +1,4 @@
+docker run --rm -v $PWD:/src -v $PWD/.naivesystems:/config \
+  -v $PWD/output:/output \
+  ccr.ccs.tencentyun.com/naivesystems/analyze:2023.2.0.949401 \
+  /opt/naivesystems/misra_analyzer -show_results
