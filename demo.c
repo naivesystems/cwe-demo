@@ -48,10 +48,11 @@ void use_shared_ptr(){
     delete_shared_ptr(sptr2, cnt);
 }
 
-void command_injection(int argc, char** argv) {
+int main(int argc, char** argv) {
   char cmd[256] = "/usr/bin/cat ";
   strcat(cmd, argv[1]);
   system(cmd);
+  return 0;
 }
 
 void file_range_error() {
