@@ -1,10 +1,14 @@
+#include <pthread.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <syslog.h>
+#include <unistd.h>
 
 #define BLOCK_SIZE 20
 
-int read(int fd, char* buf, int size){
+int readFile(int fd, char* buf, int size){
     // Implementation
     return -1;
 }
@@ -14,7 +18,7 @@ char* getBlock(int fd) {
     if (!buf) {
         return NULL;
     }
-    if (read(fd, buf, BLOCK_SIZE) != BLOCK_SIZE) {
+    if (readFile(fd, buf, BLOCK_SIZE) != BLOCK_SIZE) {
         return NULL;
     }
     return buf;
@@ -86,4 +90,26 @@ void double_free(int abrt) {
     }
     // ...
     free(ptr);
+}
+
+char* buffer;
+void handler(int sigNum) { buffer = (char*)malloc(10 * sizeof(char)); }
+int handleSignal() {
+  signal(SIGUSR1, handler);
+  signal(SIGUSR2, handler);
+  sleep(5);
+}
+
+pthread_mutex_t mutex;
+void func1(){
+    pthread_mutex_lock(&mutex);
+    pthread_mutex_unlock(&mutex);
+    // double unlock
+    pthread_mutex_unlock(&mutex);
+}
+
+void func2(){
+    pthread_mutex_init(&mutex, NULL);
+    // double unlock event
+    pthread_mutex_unlock(&mutex);
 }

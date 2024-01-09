@@ -1,5 +1,7 @@
 cwe/cwe_78
 cwe/cwe_118
 cwe/cwe_120
+cwe/cwe_364
 cwe/cwe_401
 cwe/cwe_415
+cwe/cwe_667 {"use-infer": true, "use-csa": true}
